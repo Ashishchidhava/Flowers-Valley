@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "690699579221",
+    "project_id": "flowersvalley-468a2",
+    "storage_bucket": "flowersvalley-468a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690699579221:android:1df487b69b641e28f1c9dc",
+        "android_client_info": {
+          "package_name": "com.example.flowersvalley"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690699579221-pmu0toupe6n7e5he6hp5i0nu55mec4sr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDuEBIv744dq9PJuBKOYUfFrQYPc05pJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "690699579221-pmu0toupe6n7e5he6hp5i0nu55mec4sr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
