@@ -58,7 +58,7 @@ public class LoginFragment extends Fragment {
         etMobile = view.findViewById(R.id.mobile);
 
         mAuth = FirebaseAuth.getInstance();
-        mAuth.getFirebaseAuthSettings().setAppVerificationDisabledForTesting(true);
+        //mAuth.getFirebaseAuthSettings().setAppVerificationDisabledForTesting(true);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
