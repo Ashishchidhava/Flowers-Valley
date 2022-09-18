@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "690699579221-th0qd0csl1ur78qm9q74656l61klbn5b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flowersvalley",
+            "certificate_hash": "a36902729e66b4ef0e2fe9ad51c28755c123ec87"
+          }
+        },
+        {
           "client_id": "690699579221-pmu0toupe6n7e5he6hp5i0nu55mec4sr.apps.googleusercontent.com",
           "client_type": 3
         }

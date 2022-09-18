@@ -6,7 +6,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -74,6 +73,20 @@ public class HomeFragment extends Fragment {
         flowerRecyclerview.setAdapter(new FlowerAdapter(flowers, getContext()));
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,4 +100,5 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
 }
