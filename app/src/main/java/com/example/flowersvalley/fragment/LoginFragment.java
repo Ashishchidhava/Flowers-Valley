@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.flowersvalley.MainActivity;
 import com.example.flowersvalley.R;
+import com.example.flowersvalley.Utils;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.safetynet.SafetyNet;
 import com.google.android.gms.safetynet.SafetyNetApi;
@@ -46,6 +50,7 @@ public class LoginFragment extends Fragment {
         if (getArguments() != null) {
 
         }
+        MainActivity.bottomNavigationView.setVisibility(View.GONE);
     }
 
     @Override
@@ -64,16 +69,17 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (etMobile.getText().toString().trim().equalsIgnoreCase("")) {
-                    Snackbar.make(btnLogin, "Please Enter Mobile Number.", Snackbar.LENGTH_SHORT).show();
-                    etMobile.requestFocus();
-                } else if (etMobile.getText().toString().length() != 10) {
-                    Snackbar.make(btnLogin, "Please Enter Valid Mobile Number.", Snackbar.LENGTH_SHORT).show();
-                    etMobile.requestFocus();
-                } else {
-                    String mobileNumber = "+91" + etMobile.getText().toString().trim();
-                    sendOTP(mobileNumber);
-                }
+//                if (etMobile.getText().toString().trim().equalsIgnoreCase("")) {
+//                    Snackbar.make(btnLogin, "Please Enter Mobile Number.", Snackbar.LENGTH_SHORT).show();
+//                    etMobile.requestFocus();
+//                } else if (etMobile.getText().toString().length() != 10) {
+//                    Snackbar.make(btnLogin, "Please Enter Valid Mobile Number.", Snackbar.LENGTH_SHORT).show();
+//                    etMobile.requestFocus();
+//                } else {
+//                    String mobileNumber = "+91" + etMobile.getText().toString().trim();
+//                    sendOTP(mobileNumber);
+//                }
+                Utils.replaceFragment(new OtpVerificationFragment(),getActivity());
             }
         });
 
@@ -90,8 +96,13 @@ public class LoginFragment extends Fragment {
                         .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                             @Override
                             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                                Toast.makeText(getContext(), phoneAuthCredential.getSmsCode() + "", Toast.LENGTH_SHORT).show();
                                 Log.i(TAG, "onVerificationCompleted: "+phoneAuthCredential.getSmsCode());
+
+                                Toast.makeText(getContext(), "Aapka Code Send ho gya hai. ", Toast.LENGTH_SHORT).show();
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction ft = fragmentManager.beginTransaction();
+                                ft.replace(R.id.container, new HomeFragment());
+                                ft.commit();
                             }
 
                             @Override
@@ -104,6 +115,10 @@ public class LoginFragment extends Fragment {
                             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                                 super.onCodeSent(s, forceResendingToken);
                                 Toast.makeText(getContext(), "Aapka Code Send ho gya hai. ", Toast.LENGTH_SHORT).show();
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction ft = fragmentManager.beginTransaction();
+                                ft.replace(R.id.container, new HomeFragment());
+                                ft.commit();
                                 Log.i(TAG, "onCodeSent: "+forceResendingToken);
                             }
                         })          // OnVerificationStateChangedCallbacks

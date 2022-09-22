@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.flowersvalley.MainActivity;
 import com.example.flowersvalley.R;
 import com.example.flowersvalley.adapter.FlowerAdapter;
 import com.example.flowersvalley.model.Flower;
@@ -39,6 +40,7 @@ public class HomeFragment extends Fragment {
         if (getArguments() != null) {
 
         }
+        MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
     @Override

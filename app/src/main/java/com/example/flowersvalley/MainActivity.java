@@ -1,29 +1,64 @@
 package com.example.flowersvalley;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
+import com.example.flowersvalley.fragment.CartFragment;
+import com.example.flowersvalley.fragment.FavoriteFragment;
 import com.example.flowersvalley.fragment.HomeFragment;
 import com.example.flowersvalley.fragment.LoginFragment;
+import com.example.flowersvalley.fragment.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.FirebaseApp;
 
 public class MainActivity extends AppCompatActivity {
+    public static BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        replaceFragment(new HomeFragment());
+                        break;
+                    case R.id.nav_fab:
+                        replaceFragment(new FavoriteFragment());
+                        break;
+                    case R.id.nav_cart:
+                        replaceFragment(new CartFragment());
+                        break;
+                    case R.id.nav_profile:
+                        replaceFragment(new ProfileFragment());
+                        break;
+                    default:
+                        replaceFragment(new HomeFragment());
+                }
+                return true;
+            }
+        });
 
         FirebaseApp.initializeApp(getApplicationContext());
         replaceFragment(new LoginFragment());
+
     }
 
     void replaceFragment(Fragment fragment) {
