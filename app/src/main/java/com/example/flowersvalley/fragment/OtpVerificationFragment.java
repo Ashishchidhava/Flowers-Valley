@@ -1,10 +1,8 @@
 package com.example.flowersvalley.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -16,6 +14,7 @@ import android.widget.Toast;
 import com.example.flowersvalley.MainActivity;
 import com.example.flowersvalley.R;
 import com.example.flowersvalley.Utils;
+import com.example.flowersvalley.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -27,25 +26,34 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class OtpVerificationFragment extends Fragment {
     private static final String TAG = "OtpVerificationFragment";
-    String token;
+    private String token, name, email, mobile;
     private MaterialButton btnVerify;
     private TextInputEditText etOtp;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
 
     public OtpVerificationFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            token = getArguments().getString("token");
+            name = getArguments().getString("name");
+            email = getArguments().getString("email");
+            mobile = getArguments().getString("mobile");
         }
         MainActivity.bottomNavigationView.setVisibility(View.VISIBLE);
     }
@@ -58,7 +66,13 @@ public class OtpVerificationFragment extends Fragment {
 
         btnVerify = view.findViewById(R.id.btn_verify);
         etOtp = view.findViewById(R.id.otp);
+
         mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("users");
+
+        FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(false);
+
 
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +100,32 @@ public class OtpVerificationFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            Utils.replaceFragment(new HomeFragment(), getActivity());
 
-                            FirebaseUser user = task.getResult().getUser();
-                            // Update UI
+                            Log.i(TAG, "verifyOtp: Name " + name);
+                            Log.i(TAG, "verifyOtp: Email " + email);
+                            Log.i(TAG, "verifyOtp: Mobile " + mobile);
+
+
+                            if (name != null && email != null && mobile != null) {
+                                User user = new User("" + name, "" + email, "" + mobile);
+                                Toast.makeText(getContext(), "From Register Fragment", Toast.LENGTH_SHORT).show();
+                                databaseReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        databaseReference.setValue(user);
+                                        Log.i(TAG, "onDataChange: " + snapshot);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Log.e(TAG, "onCancelled: " + error);
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(getContext(), "From Login Fragment", Toast.LENGTH_SHORT).show();
+                            }
+
+
                         } else {
                             // Sign in failed, display a message and update the UI
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

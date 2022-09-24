@@ -10,4 +10,7 @@
     <string name="to_your_account">to Your Account</string>
     <string name="mobile">Mobile</string>
     <string name="verify_otp">Verify OTP</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
 </resources>
