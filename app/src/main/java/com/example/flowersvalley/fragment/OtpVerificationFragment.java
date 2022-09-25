@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.flowersvalley.MainActivity;
 import com.example.flowersvalley.R;
+import com.example.flowersvalley.SharedPreferenceManager;
 import com.example.flowersvalley.Utils;
 import com.example.flowersvalley.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +32,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONObject;
+
+import java.util.Scanner;
 
 public class OtpVerificationFragment extends Fragment {
     private static final String TAG = "OtpVerificationFragment";
@@ -69,7 +74,6 @@ public class OtpVerificationFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("users");
 
         FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(false);
 
@@ -105,15 +109,46 @@ public class OtpVerificationFragment extends Fragment {
                             Log.i(TAG, "verifyOtp: Email " + email);
                             Log.i(TAG, "verifyOtp: Mobile " + mobile);
 
-
                             if (name != null && email != null && mobile != null) {
                                 User user = new User("" + name, "" + email, "" + mobile);
-                                Toast.makeText(getContext(), "From Register Fragment", Toast.LENGTH_SHORT).show();
+                                databaseReference = firebaseDatabase.getReference("users").child(mobile);
                                 databaseReference.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         databaseReference.setValue(user);
                                         Log.i(TAG, "onDataChange: " + snapshot);
+                                        if (snapshot.exists()) {
+                                            Snackbar.make(btnVerify, "Registration Successfully.", Snackbar.LENGTH_SHORT).show();
+                                            Utils.replaceFragment(new LoginFragment(), getActivity());
+                                        } else {
+                                            Snackbar.make(btnVerify, "Something went wrong.", Snackbar.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Log.e(TAG, "onCancelled: " + error);
+                                    }
+
+                                });
+                            } else {
+                                databaseReference = firebaseDatabase.getReference("users").child(mobile);
+                                databaseReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                        Log.i(TAG, "Login onDataChange Name: " + snapshot.child("name").getValue().toString());
+                                        Log.i(TAG, "Login onDataChange Email: " + snapshot.child("email").getValue().toString());
+                                        Log.i(TAG, "Login onDataChange Mobile: " + snapshot.child("mobile").getValue().toString());
+
+
+                                        SharedPreferenceManager sharedPreferenceManager = new SharedPreferenceManager(getContext());
+                                        sharedPreferenceManager.setName(snapshot.child("name").getValue().toString());
+                                        sharedPreferenceManager.setEmail(snapshot.child("email").getValue().toString());
+                                        sharedPreferenceManager.setPhone(snapshot.child("mobile").getValue().toString());
+
+                                        Utils.replaceFragment(new HomeFragment(), getActivity());
+
                                     }
 
                                     @Override
@@ -121,8 +156,6 @@ public class OtpVerificationFragment extends Fragment {
                                         Log.e(TAG, "onCancelled: " + error);
                                     }
                                 });
-                            } else {
-                                Toast.makeText(getContext(), "From Login Fragment", Toast.LENGTH_SHORT).show();
                             }
 
 

@@ -124,6 +124,10 @@ public class LoginFragment extends Fragment {
                                 OtpVerificationFragment fragment = new OtpVerificationFragment();
                                 Bundle bundle = new Bundle();
                                 bundle.putString("token", s);
+
+                                //Mobile number added for login
+                                bundle.putString("mobile", mobile);
+
                                 fragment.setArguments(bundle);
                                 Utils.replaceFragment(fragment, getActivity());
                             }
