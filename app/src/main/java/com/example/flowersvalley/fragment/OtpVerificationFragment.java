@@ -136,7 +136,6 @@ public class OtpVerificationFragment extends Fragment {
                                 databaseReference.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                                         Log.i(TAG, "Login onDataChange Name: " + snapshot.child("name").getValue().toString());
                                         Log.i(TAG, "Login onDataChange Email: " + snapshot.child("email").getValue().toString());
                                         Log.i(TAG, "Login onDataChange Mobile: " + snapshot.child("mobile").getValue().toString());

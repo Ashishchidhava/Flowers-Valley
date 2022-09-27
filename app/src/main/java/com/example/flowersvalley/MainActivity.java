@@ -25,6 +25,7 @@ import com.google.firebase.FirebaseApp;
 
 public class MainActivity extends AppCompatActivity {
     public static BottomNavigationView bottomNavigationView;
+    private SharedPreferenceManager sharedPreferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         FirebaseApp.initializeApp(getApplicationContext());
-        replaceFragment(new LoginFragment());
+
+        sharedPreferenceManager = new SharedPreferenceManager(this);
+
+        if (sharedPreferenceManager.getName() != null) {
+            replaceFragment(new HomeFragment());
+        } else {
+            replaceFragment(new LoginFragment());
+        }
 
     }
 

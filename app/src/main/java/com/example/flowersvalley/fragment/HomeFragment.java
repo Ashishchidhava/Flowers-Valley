@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -21,7 +22,13 @@ import com.example.flowersvalley.MainActivity;
 import com.example.flowersvalley.R;
 import com.example.flowersvalley.SharedPreferenceManager;
 import com.example.flowersvalley.adapter.FlowerAdapter;
+import com.example.flowersvalley.model.Banner;
 import com.example.flowersvalley.model.Flower;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -32,7 +39,8 @@ public class HomeFragment extends Fragment {
     private AppCompatTextView viewAll;
     private SharedPreferenceManager preferenceManager;
     private static final String TAG = "HomeFragment";
-
+    private DatabaseReference mDatabaseRef;
+    private Banner banner;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -57,14 +65,26 @@ public class HomeFragment extends Fragment {
         flowerRecyclerview = view.findViewById(R.id.flower_recyclerview);
         viewAll = view.findViewById(R.id.view_all);
 
+        preferenceManager = new SharedPreferenceManager(getContext());
         ArrayList<SlideModel> imageList = new ArrayList<>();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("banners");
 
-        imageList.add(new SlideModel("https://media.istockphoto.com/photos/panoramic-view-of-mt-cook-mountain-range-at-colorful-sunset-picture-id642047430?s=612x612", ScaleTypes.FIT));
-        imageList.add(new SlideModel("https://images.prismic.io/indiahike/226b9030-85aa-4032-a0a0-1562d697ff53_ValleyOfFlowers+-+Pavan+Jain+-+Blooming+flowers+of+the+valley.jpg?auto=compress,format", ScaleTypes.FIT));
-        imageList.add(new SlideModel("https://bit.ly/3fLJf72", ScaleTypes.FIT));
-        imageList.add(new SlideModel("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyZOUuvPlPeUIKSU3Bg9F4A7IGWkvLBcSUMQ&usqp=CAU", ScaleTypes.FIT));
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    banner = postSnapshot.getValue(Banner.class);
+                    Log.i(TAG, "onCreateView: Data > " + postSnapshot.getValue());
+                    imageList.add(new SlideModel("" + banner.getImageUrl(),  ScaleTypes.FIT));
+                }
+                imageSlider.setImageList(imageList);
+            }
 
-        imageSlider.setImageList(imageList);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         flowerRecyclerview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -75,17 +95,7 @@ public class HomeFragment extends Fragment {
         flowers.add(new Flower("Kamal", 599, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
         flowers.add(new Flower("Angle", 99, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
 
-
         flowerRecyclerview.setAdapter(new FlowerAdapter(flowers, getContext()));
-
-
-        preferenceManager=new SharedPreferenceManager(getContext());
-
-        Log.i(TAG, "onCreateView: Name > "+preferenceManager.getName());
-        Log.i(TAG, "onCreateView: Email > "+preferenceManager.getEmail());
-        Log.i(TAG, "onCreateView: Mobile > "+preferenceManager.getPhone());
-
-
 
 
         viewAll.setOnClickListener(new View.OnClickListener() {
