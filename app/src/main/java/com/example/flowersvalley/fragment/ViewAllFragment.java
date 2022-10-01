@@ -48,11 +48,11 @@ public class ViewAllFragment extends Fragment {
 
         flowerRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 2));
         flowers = new ArrayList<>();
-        flowers.add(new Flower("Angle", 399, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
-        flowers.add(new Flower("Angle", 199, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
-        flowers.add(new Flower("Chameli", 299, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
-        flowers.add(new Flower("Kamal", 599, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
-        flowers.add(new Flower("Angle", 99, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
+//        flowers.add(new Flower("Angle", 399, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
+//        flowers.add(new Flower("Angle", 199, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
+//        flowers.add(new Flower("Chameli", 299, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
+//        flowers.add(new Flower("Kamal", 599, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
+//        flowers.add(new Flower("Angle", 99, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
 
         flowerRecyclerview.setAdapter(new ViewAllFlowerAdapter(flowers, getContext()));
 

@@ -23,9 +23,13 @@
         <entry key="..\:/Class/FlowersValley/app/src/main/res/layout/fragment_view_all.xml" value="0.27447916666666666" />
         <entry key="..\:/Class/FlowersValley/app/src/main/res/layout/view_all_flower_card_recyclerview.xml" value="0.16" />
         <entry key="..\:/Class/FlowersValley/app/src/main/res/menu/bottom_navigation.xml" value="0.2" />
+        <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/drawable/cart_bottom_nav_bg.xml" value="0.2125" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/activity_splash.xml" value="0.27447916666666666" />
+        <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/flower_card_recyclerview.xml" value="0.27447916666666666" />
+        <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/fragment_flower_detail.xml" value="0.22962962962962963" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/fragment_login.xml" value="0.27447916666666666" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/fragment_register.xml" value="0.27447916666666666" />
+        <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/layout_cart_badge.xml" value="0.27447916666666666" />
       </map>
     </option>
   </component>

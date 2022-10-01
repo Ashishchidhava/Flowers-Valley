@@ -1,7 +1,9 @@
 package com.example.flowersvalley;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,6 +13,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -19,6 +22,7 @@ import com.example.flowersvalley.fragment.FavoriteFragment;
 import com.example.flowersvalley.fragment.HomeFragment;
 import com.example.flowersvalley.fragment.LoginFragment;
 import com.example.flowersvalley.fragment.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.FirebaseApp;
@@ -58,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         FirebaseApp.initializeApp(getApplicationContext());
-
         sharedPreferenceManager = new SharedPreferenceManager(this);
 
         if (sharedPreferenceManager.getName() != null) {
@@ -75,5 +78,13 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.container, fragment);
         ft.commit();
     }
+
+    public void replaceFragment(Fragment fragment, Context context) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.container, fragment);
+        ft.commit();
+    }
+
 
 }

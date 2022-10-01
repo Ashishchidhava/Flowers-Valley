@@ -42,13 +42,13 @@ public class ViewAllFlowerAdapter extends RecyclerView.Adapter<ViewAllFlowerAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Flower flower = list.get(position);
-        holder.flowerName.setText("" + flower.getName());
-        holder.flowerPrice.setText("" + flower.getPrice());
-
-
-        Glide.with(context)
-                .load(flower.getImageUrl())
-                .into(holder.flowerImage);
+//        holder.flowerName.setText("" + flower.getName());
+//        holder.flowerPrice.setText("" + flower.getPrice());
+//
+//
+//        Glide.with(context)
+//                .load(flower.getImageUrl())
+//                .into(holder.flowerImage);
 
     }
 

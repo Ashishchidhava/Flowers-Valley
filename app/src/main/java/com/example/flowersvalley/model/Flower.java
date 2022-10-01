@@ -1,25 +1,71 @@
 package com.example.flowersvalley.model;
 
 public class Flower {
-    String name;
-    int price;
-    String imageUrl;
+    private String flowerId;
+    private String flowerName;
+    private String flowerPrice;
+    private String flowerQuantity;
+    private String flowerDescription;
+    private String flowerImageUrl;
 
-    public Flower(String name, int price, String imageUrl) {
-        this.name = name;
-        this.price = price;
-        this.imageUrl = imageUrl;
+    public Flower() {
+        //Required constructor
     }
 
-    public String getName() {
-        return name;
+    public Flower(String flowerId, String flowerName, String flowerPrice, String flowerQuantity, String flowerDescription, String flowerImageUrl) {
+        this.flowerId = flowerId;
+        this.flowerName = flowerName;
+        this.flowerPrice = flowerPrice;
+        this.flowerQuantity = flowerQuantity;
+        this.flowerDescription = flowerDescription;
+        this.flowerImageUrl = flowerImageUrl;
     }
 
-    public int getPrice() {
-        return price;
+    public String getFlowerId() {
+        return flowerId;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public void setFlowerId(String flowerId) {
+        this.flowerId = flowerId;
+    }
+
+    public String getFlowerName() {
+        return flowerName;
+    }
+
+    public void setFlowerName(String flowerName) {
+        this.flowerName = flowerName;
+    }
+
+    public String getFlowerPrice() {
+        return flowerPrice;
+    }
+
+    public void setFlowerPrice(String flowerPrice) {
+        this.flowerPrice = flowerPrice;
+    }
+
+    public String getFlowerQuantity() {
+        return flowerQuantity;
+    }
+
+    public void setFlowerQuantity(String flowerQuantity) {
+        this.flowerQuantity = flowerQuantity;
+    }
+
+    public String getFlowerDescription() {
+        return flowerDescription;
+    }
+
+    public void setFlowerDescription(String flowerDescription) {
+        this.flowerDescription = flowerDescription;
+    }
+
+    public String getFlowerImageUrl() {
+        return flowerImageUrl;
+    }
+
+    public void setFlowerImageUrl(String flowerImageUrl) {
+        this.flowerImageUrl = flowerImageUrl;
     }
 }

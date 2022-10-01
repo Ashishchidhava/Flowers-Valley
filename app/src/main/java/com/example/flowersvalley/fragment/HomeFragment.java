@@ -40,7 +40,9 @@ public class HomeFragment extends Fragment {
     private SharedPreferenceManager preferenceManager;
     private static final String TAG = "HomeFragment";
     private DatabaseReference mDatabaseRef;
+    private FirebaseDatabase firebaseDatabase;
     private Banner banner;
+    private Flower flower;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,15 +69,18 @@ public class HomeFragment extends Fragment {
 
         preferenceManager = new SharedPreferenceManager(getContext());
         ArrayList<SlideModel> imageList = new ArrayList<>();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("banners");
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = firebaseDatabase.getReference("banners");
+        flowers = new ArrayList<>();
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                imageList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     banner = postSnapshot.getValue(Banner.class);
                     Log.i(TAG, "onCreateView: Data > " + postSnapshot.getValue());
-                    imageList.add(new SlideModel("" + banner.getImageUrl(),  ScaleTypes.FIT));
+                    imageList.add(new SlideModel("" + banner.getImageUrl(), ScaleTypes.FIT));
                 }
                 imageSlider.setImageList(imageList);
             }
@@ -87,15 +92,25 @@ public class HomeFragment extends Fragment {
         });
 
 
-        flowerRecyclerview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        flowers = new ArrayList<>();
-        flowers.add(new Flower("Angle", 399, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
-        flowers.add(new Flower("Angle", 199, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
-        flowers.add(new Flower("Chameli", 299, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
-        flowers.add(new Flower("Kamal", 599, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
-        flowers.add(new Flower("Angle", 99, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDDW0EkVedjx6cwPVkqKXAp9iRtq75WTBh3DhHWvWC&s"));
+        firebaseDatabase.getReference("flowers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                flowers.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    flower = postSnapshot.getValue(Flower.class);
+                    Log.i(TAG, "onCreateView: Data > " + postSnapshot.getValue());
+                    flowers.add(flower);
+                }
+                flowerRecyclerview.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+                flowerRecyclerview.setAdapter(new FlowerAdapter(flowers, getContext()));
 
-        flowerRecyclerview.setAdapter(new FlowerAdapter(flowers, getContext()));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         viewAll.setOnClickListener(new View.OnClickListener() {
