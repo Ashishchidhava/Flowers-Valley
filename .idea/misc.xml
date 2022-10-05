@@ -24,9 +24,14 @@
         <entry key="..\:/Class/FlowersValley/app/src/main/res/layout/view_all_flower_card_recyclerview.xml" value="0.16" />
         <entry key="..\:/Class/FlowersValley/app/src/main/res/menu/bottom_navigation.xml" value="0.2" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/drawable/cart_bottom_nav_bg.xml" value="0.2125" />
+        <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/drawable/home_top_corner_bg.xml" value="0.182" />
+        <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.182" />
+        <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.182" />
+        <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/drawable/search_round_bg.xml" value="0.1295" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/activity_splash.xml" value="0.27447916666666666" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/flower_card_recyclerview.xml" value="0.27447916666666666" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/fragment_flower_detail.xml" value="0.22962962962962963" />
+        <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/fragment_home.xml" value="0.2786458333333333" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/fragment_login.xml" value="0.27447916666666666" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/fragment_register.xml" value="0.27447916666666666" />
         <entry key="..\:/My Data/Class/FlowersValley/app/src/main/res/layout/layout_cart_badge.xml" value="0.27447916666666666" />

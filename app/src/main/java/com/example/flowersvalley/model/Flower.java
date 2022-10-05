@@ -68,4 +68,9 @@ public class Flower {
     public void setFlowerImageUrl(String flowerImageUrl) {
         this.flowerImageUrl = flowerImageUrl;
     }
+
+    @Override
+    public String toString() {
+        return flowerName;
+    }
 }

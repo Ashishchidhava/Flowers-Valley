@@ -1,8 +1,10 @@
 package com.example.flowersvalley.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,6 +15,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -21,6 +27,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.flowersvalley.MainActivity;
 import com.example.flowersvalley.R;
 import com.example.flowersvalley.SharedPreferenceManager;
+import com.example.flowersvalley.Utils;
 import com.example.flowersvalley.adapter.FlowerAdapter;
 import com.example.flowersvalley.model.Banner;
 import com.example.flowersvalley.model.Flower;
@@ -43,6 +50,9 @@ public class HomeFragment extends Fragment {
     private FirebaseDatabase firebaseDatabase;
     private Banner banner;
     private Flower flower;
+    private SearchView searchView;
+    private ListView searchFlowerList;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,6 +76,9 @@ public class HomeFragment extends Fragment {
         imageSlider = view.findViewById(R.id.image_slider);
         flowerRecyclerview = view.findViewById(R.id.flower_recyclerview);
         viewAll = view.findViewById(R.id.view_all);
+        searchView = view.findViewById(R.id.search_bar);
+        searchFlowerList = view.findViewById(R.id.search_list);
+
 
         preferenceManager = new SharedPreferenceManager(getContext());
         ArrayList<SlideModel> imageList = new ArrayList<>();
@@ -116,10 +129,53 @@ public class HomeFragment extends Fragment {
         viewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.replace(R.id.container, new ViewAllFragment());
-                ft.commit();
+                Utils.replaceFragment(new ViewAllFragment(), getActivity());
+            }
+        });
+
+        ArrayAdapter<Flower> flowerArrayAdapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, flowers);
+        searchFlowerList.setAdapter(flowerArrayAdapter);
+        searchFlowerList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                //flower = flowers.get(i);
+                Log.i(TAG, "onItemSelected: " + flowers.get(i).getFlowerId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.e(TAG, "onNothingSelected:" );
+            }
+        });
+
+        searchView.setQueryHint("Red Rose");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i(TAG, "onQueryTextSubmit: " + query);
+                if (flowers.contains(query)) {
+                    flowerArrayAdapter.getFilter().filter(query);
+                } else {
+                    Toast.makeText(getContext(), "No Match found", Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.i(TAG, "onQueryTextChange: " + newText);
+                searchFlowerList.setVisibility(View.VISIBLE);
+                flowerArrayAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                searchView.onActionViewCollapsed();
+                searchFlowerList.setVisibility(View.GONE);
+                return false;
             }
         });
 
